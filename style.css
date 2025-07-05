@@ -244,6 +244,42 @@ input[type="text"], input[type="date"], input[type="file"] {
   }
 }
 
+/* Style the modal content if not already done */
+.modal-content {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Make branch buttons stack vertically */
+.branches {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Style each branch button */
+.branch-btn {
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 15px;
+  font-size: 20px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect */
+.branch-btn:hover {
+  background-color: #e04e00;
+}
+
+
 /* Fade out the entire splash after a pause */
 @keyframes splashFade {
   to { opacity: 0; visibility: hidden; }
