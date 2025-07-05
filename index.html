@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Link to manifest file -->
+<link rel="manifest" href="manifest.json" />
+
+<!-- Theme color for browser -->
+<meta name="theme-color" content="#ff6600" />
+
+<!-- Responsive scaling -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lulu Fried Chicken Staff Manager</title>
+<link rel="stylesheet" href="style.css" />
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen Overlay -->
+<div id="splash-screen">
+  <img src="icons/lulu logo.png" alt="Lulu Fried Chicken Logo" />
+</div>
+
+<!-- Branch Modal -->
+<div id="branchModal" class="modal">
+  <div class="modal-content" tabindex="0">
+    <h2>Select Branch</h2>
+    <div class="branches">
+      <button class="branch-btn" data-branch="LFC Dahan">LFC Dahan</button>
+      <button class="branch-btn" data-branch="LFC Kharan">LFC Kharan</button>
+      <button class="branch-btn" data-branch="LFC Rams">LFC Rams</button>
+      <button class="branch-btn" data-branch="LFC Dhaith">LFC Dhaith</button>
+    </div>
+  </div>
+</div>
+
+<!-- Branch Selected -->
+<section id="selectedBranchSection" class="hidden">
+  <h2>Branch: <span id="selectedBranchName"></span></h2>
+  <button id="changeBranchBtn" class="btn">Change Branch</button>
+</section>
+
+<!-- Staff Form -->
+<section id="add-staff-form" class="hidden">
+  <h3 id="formTitle">Add Staff Member</h3>
+  <form id="staffForm">
+    <input type="hidden" id="staffId" />
+    <label>
+      Name*:
+      <input type="text" id="name" required />
+    </label>
+    <label>
+      Position*:
+      <input type="text" id="position" required />
+    </label>
+
+    <label>
+      Photo*:
+      <input type="file" id="photo" accept="image/*" />
+    </label>
+
+    <label>
+      Passport Expiry:
+      <input type="date" id="passportExpiry" />
+    </label>
+    <label>
+      Visa Expiry:
+      <input type="date" id="visaExpiry" />
+    </label>
+    <label>
+      ID Card Expiry:
+      <input type="date" id="idExpiry" />
+    </label>
+    <label>
+      Labour Card Expiry:
+      <input type="date" id="labourExpiry" />
+    </label>
+    <label>
+      OHC Card Expiry:
+      <input type="date" id="ohcExpiry" />
+    </label>
+
+    <label>
+      Passport Document:
+      <input type="file" id="passportDoc" accept="application/pdf,image/*" />
+    </label>
+    <label>
+      ID Card Document:
+      <input type="file" id="idDoc" accept="application/pdf,image/*" />
+    </label>
+    <label>
+      Visa Document:
+      <input type="file" id="visaDoc" accept="application/pdf,image/*" />
+    </label>
+    <label>
+      Labour Card Document:
+      <input type="file" id="labourCardDoc" accept="application/pdf,image/*" />
+    </label>
+    <label>
+      OHC Card Document:
+      <input type="file" id="ohcCardDoc" accept="application/pdf,image/*" />
+    </label>
+
+    <div class="form-buttons">
+      <button type="submit" id="submitBtn" class="btn">Add Staff</button>
+      <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Cancel</button>
+    </div>
+  </form>
+</section>
+
+<!-- Staff List -->
+<section id="staff-list-section" class="hidden">
+  <h3>Staff Members</h3>
+  <div id="staff-list" class="staff-list"></div>
+</section>
+
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="spinner hidden"></div>
+
+<!-- Reminder Popup Modal -->
+<div id="remindersModal" class="modal">
+  <div class="modal-content" tabindex="0">
+    <h2>Expiry Reminders (Next 30 Days)</h2>
+    <div id="reminder-area"></div>
+    <button id="closeRemindersBtn" class="btn btn-secondary">Close</button>
+  </div>
+</div>
+
+<!-- Show Reminders Button -->
+<button id="showRemindersBtn" class="btn reminders-btn hidden">Show Expiry Reminders</button>
+
+<script src="app.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('✅ Service Worker Registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('❌ Service Worker registration failed:', error);
+      });
+  }
+</script>
+ 
+</body>
+</html>
