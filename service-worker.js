@@ -4,9 +4,13 @@ const urlsToCache = [
   './index.html',
   './style.css',
   './app.js',
-  './icons/lulu logo.png',
   './manifest.json',
+  './icons/lulu logo.png',
+  './icons/lulu_512.png',
+  './images/staff-placeholder.jpg',
+  './icons/U.png'
 ];
+
 
 self.addEventListener('install', event => {
   event.waitUntil(
