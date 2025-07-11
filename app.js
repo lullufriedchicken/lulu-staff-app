@@ -39,6 +39,12 @@ const staffListSection = document.getElementById("staff-list-section");
 const staffList = document.getElementById("staff-list");
 const staffForm = document.getElementById("staffForm");
 
+const branchDocForm = document.getElementById("branchDocForm");
+const branchDocTypeInput = document.getElementById("branchDocType");
+const branchDocFileInput = document.getElementById("branchDocFile");
+const branchDocumentsList = document.getElementById("branchDocumentsList");
+const branchDocumentsSection = document.getElementById("branch-documents-section");
+
 const loadingSpinner = document.getElementById("loadingSpinner");
 
 const reminderArea = document.getElementById("reminder-area");
@@ -103,6 +109,7 @@ function openBranchModal() {
   staffListSection.classList.add("hidden");
   selectedBranchSection.classList.add("hidden");
   showRemindersBtn.classList.add("hidden");
+  branchDocumentsSection.classList.add("hidden");
 }
 
 // Select branch event
@@ -115,6 +122,10 @@ branchButtons.forEach((btn) => {
     staffListSection.classList.remove("hidden");
     selectedBranchNameSpan.textContent = currentBranch;
     showRemindersBtn.classList.remove("hidden");
+
+    branchDocumentsSection.classList.remove("hidden");
+loadBranchDocuments();
+
     loadStaff();
     resetForm();
   });
@@ -429,4 +440,94 @@ window.addEventListener('load', () => {
       splash.remove();
     }
   });
+});
+
+async function loadBranchDocuments() {
+  branchDocumentsList.innerHTML = "";
+  if (!currentBranch) return;
+
+  try {
+    const snapshot = await db.collection("branch_documents")
+      .where("branch", "==", currentBranch)
+      .orderBy("uploadedAt", "desc")
+      .get();
+
+    if (snapshot.empty) {
+      branchDocumentsList.innerHTML = "<p>No branch documents uploaded yet.</p>";
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      const docData = doc.data();
+      const div = document.createElement("div");
+      div.className = "branch-doc-item";
+      div.innerHTML = `
+        <strong>${docData.type}</strong> - Uploaded on ${new Date(docData.uploadedAt.seconds * 1000).toLocaleDateString()}
+        <br/>
+        <a href="${docData.fileUrl}" target="_blank" rel="noopener noreferrer">View / Download</a>
+        <button class="btn btn-secondary btn-sm delete-branch-doc-btn" data-id="${doc.id}">Delete</button>
+      `;
+
+      div.querySelector(".delete-branch-doc-btn").addEventListener("click", async () => {
+        if (confirm(`Delete ${docData.type}?`)) {
+          try {
+            await db.collection("branch_documents").doc(doc.id).delete();
+            alert("Document deleted.");
+            loadBranchDocuments();
+          } catch (err) {
+            alert("Error deleting document: " + err.message);
+          }
+        }
+      });
+
+      branchDocumentsList.appendChild(div);
+    });
+  } catch (err) {
+    alert("Error loading branch documents: " + err.message);
+  }
+}
+
+branchDocForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!currentBranch) {
+    alert("Please select a branch first.");
+    return;
+  }
+
+  const docType = branchDocTypeInput.value.trim();
+  const file = branchDocFileInput.files[0];
+
+  if (!docType) {
+    alert("Please enter document type.");
+    return;
+  }
+  if (!file) {
+    alert("Please select a file to upload.");
+    return;
+  }
+
+  showLoading(true);
+  const fileUrl = await uploadFileToImgBB(file);
+  if (!fileUrl) {
+    alert("Failed to upload document.");
+    showLoading(false);
+    return;
+  }
+
+  try {
+    await db.collection("branch_documents").add({
+      branch: currentBranch,
+      type: docType,
+      fileUrl,
+      uploadedAt: new Date(),
+    });
+    alert("Branch document uploaded.");
+    branchDocForm.reset();
+    loadBranchDocuments();
+  } catch (err) {
+    alert("Error saving document: " + err.message);
+  }
+
+  showLoading(false);
 });
