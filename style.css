@@ -284,3 +284,33 @@ input[type="text"], input[type="date"], input[type="file"] {
 @keyframes splashFade {
   to { opacity: 0; visibility: hidden; }
 }
+
+#branch-documents-section {
+  margin-top: 20px;
+  border-top: 1px solid #d73925;
+  padding-top: 15px;
+}
+
+.branch-doc-item {
+  background: #fff3f1;
+  border: 1px solid #d73925;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.branch-doc-item a {
+  color: #d73925;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.branch-doc-item a:hover {
+  text-decoration: underline;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.8em;
+  margin-left: 10px;
+}
