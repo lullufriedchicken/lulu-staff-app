@@ -1,10 +1,11 @@
 const CACHE_NAME = 'lulu-staff-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  // Add other files you want cached here, like images/icons
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './icons/lulu logo.png',
+  './manifest.json',
 ];
 
 self.addEventListener('install', event => {
