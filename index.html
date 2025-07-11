@@ -44,6 +44,25 @@
   <button id="changeBranchBtn" class="btn">Change Branch</button>
 </section>
 
+<!-- Branch Documents Upload Section -->
+<section id="branch-documents-section" class="hidden">
+  <h3>Branch Documents</h3>
+  <form id="branchDocForm">
+    <label>
+      Document Type*:
+      <input type="text" id="branchDocType" placeholder="e.g., Trade License" required />
+    </label>
+    <label>
+      Upload Document*:
+      <input type="file" id="branchDocFile" accept="application/pdf,image/*" required />
+    </label>
+    <button type="submit" class="btn">Upload Document</button>
+  </form>
+  <div id="branchDocumentsList"></div>
+</section>
+
+
+
 <!-- Staff Form -->
 <section id="add-staff-form" class="hidden">
   <h3 id="formTitle">Add Staff Member</h3>
@@ -64,47 +83,55 @@
     </label>
 
     <label>
-      Passport Expiry:
-      <input type="date" id="passportExpiry" />
-    </label>
-    <label>
-      Visa Expiry:
-      <input type="date" id="visaExpiry" />
-    </label>
-    <label>
-      ID Card Expiry:
-      <input type="date" id="idExpiry" />
-    </label>
-    <label>
-      Labour Card Expiry:
-      <input type="date" id="labourExpiry" />
-    </label>
-    <label>
-      OHC Card Expiry:
-      <input type="date" id="ohcExpiry" />
-    </label>
-
-    <label>
       Passport Document:
       <input type="file" id="passportDoc" accept="application/pdf,image/*" />
     </label>
+
+    <label>
+      Passport Expiry:
+      <input type="date" id="passportExpiry" />
+    </label>
+
     <label>
       ID Card Document:
       <input type="file" id="idDoc" accept="application/pdf,image/*" />
     </label>
+
+    <label>
+      ID Card Expiry:
+      <input type="date" id="idExpiry" />
+    </label>
+
     <label>
       Visa Document:
       <input type="file" id="visaDoc" accept="application/pdf,image/*" />
     </label>
+    
+    <label>
+      Visa Expiry:
+      <input type="date" id="visaExpiry" />
+    </label>
+
     <label>
       Labour Card Document:
       <input type="file" id="labourCardDoc" accept="application/pdf,image/*" />
     </label>
+    
     <label>
+      Labour Card Expiry:
+      <input type="date" id="labourExpiry" />
+    </label>
+
+     <label>
       OHC Card Document:
       <input type="file" id="ohcCardDoc" accept="application/pdf,image/*" />
     </label>
 
+    <label>
+      OHC Card Expiry:
+      <input type="date" id="ohcExpiry" />
+    </label>
+   
     <div class="form-buttons">
       <button type="submit" id="submitBtn" class="btn">Add Staff</button>
       <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Cancel</button>
